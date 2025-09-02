@@ -1,0 +1,142 @@
+*file-reloader.txt*    Automatic file change detection and hot buffer reloading
+
+Author: Ryan Gray
+Version: 1.0.0
+License: MIT
+
+==============================================================================
+CONTENTS                                              *file-reloader-contents*
+
+    1. Introduction ............................ |file-reloader-introduction|
+    2. Installation ............................ |file-reloader-installation|
+    3. Configuration ........................... |file-reloader-configuration|
+    4. Usage ................................... |file-reloader-usage|
+    5. API ..................................... |file-reloader-api|
+    6. Commands ................................ |file-reloader-commands|
+
+==============================================================================
+1. INTRODUCTION                                   *file-reloader-introduction*
+
+file-reloader.nvim is a modern, efficient Neovim plugin for automatic file 
+change detection and hot buffer/window reloading. It uses multiple detection
+methods including native libuv file system polling, focus events, and cursor 
+events for comprehensive coverage.
+
+Features:
+- Multiple detection methods for reliability
+- Smart notifications when files are reloaded
+- Fully configurable polling intervals and notifications
+- Efficient native libuv implementation with debouncing
+- Per-buffer file watchers with automatic cleanup
+- Background timer fallback for extended idle periods
+
+==============================================================================
+2. INSTALLATION                                   *file-reloader-installation*
+
+Using lazy.nvim: >
+
+    {
+      dir = "~/file-reloader.nvim", -- Local path
+      name = "file-reloader.nvim",
+      lazy = false,
+      priority = 900,
+      config = function()
+        require('file-reloader').setup()
+      end,
+    }
+<
+
+Using packer.nvim: >
+
+    use {
+      '~/file-reloader.nvim',
+      config = function()
+        require('file-reloader').setup()
+      end
+    }
+<
+
+==============================================================================
+3. CONFIGURATION                                 *file-reloader-configuration*
+
+Default configuration: >
+
+    require('file-reloader').setup({
+      -- Vim options for auto-reloading
+      autoread = true,
+      backup = false,
+      writebackup = false,
+      swapfile = false,
+      
+      -- File watching settings
+      updatetime = 1000,
+      poll_interval = 1000,
+      timer_interval = 2000,
+      debounce_time = 1000000000,
+      
+      -- Notifications
+      notifications = {
+        enabled = true,
+        timeout = 2000,
+        warn_timeout = 4000,
+      },
+      
+      -- Keymaps
+      keymaps = {
+        enabled = true,
+        refresh = '<leader>r',
+      },
+    })
+<
+
+==============================================================================
+4. USAGE                                                 *file-reloader-usage*
+
+The plugin works automatically once installed. Files are monitored when 
+opened in buffers, external changes trigger automatic reloads, and 
+notifications inform you when files are reloaded.
+
+Default keymap:
+- `<leader>r` - Manually refresh files from disk
+
+==============================================================================
+5. API                                                     *file-reloader-api*
+
+file-reloader.setup({opts})                        *file-reloader.setup()*
+    Setup the plugin with custom options.
+    
+    Parameters: ~
+        {opts} (table) Optional configuration table
+
+file-reloader.refresh()                            *file-reloader.refresh()*
+    Manually refresh all files from disk.
+
+file-reloader.status()                              *file-reloader.status()*
+    Get status information about active file watchers.
+    
+    Returns: ~
+        {table} Status information containing:
+        - active_watchers: number of active file watchers
+        - global_timer_active: whether background timer is running
+        - autorefresh_group_id: autocmd group ID
+
+file-reloader.cleanup()                            *file-reloader.cleanup()*
+    Clean up all file watchers and resources. Usually not needed.
+
+==============================================================================
+6. COMMANDS                                           *file-reloader-commands*
+
+                                                   *:FileReloaderRefresh*
+:FileReloaderRefresh
+    Manually refresh all files from disk.
+
+                                                    *:FileReloaderStatus*
+:FileReloaderStatus  
+    Show status information about the file reloader.
+
+                                                   *:FileReloaderCleanup*
+:FileReloaderCleanup
+    Clean up file reloader resources.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
