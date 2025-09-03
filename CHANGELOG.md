@@ -2,6 +2,13 @@
 
 All notable changes to file-reloader.nvim will be documented in this file.
 
+## [Unreleased]
+
+### Documentation
+- Added documentation for optional nvim-notify dependency
+- Updated installation examples to include nvim-notify dependency
+- Clarified that nvim-notify is optional but recommended for enhanced notifications
+
 ## [1.0.0] - 2025-09-02
 
 ### Added

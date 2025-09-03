@@ -1,9 +1,9 @@
 -- Lazy.nvim plugin specification for file-reloader.nvim
--- This makes it easy to integrate with lazy.nvim plugin manager
-
 return {
   name = "file-reloader.nvim",
-  
+  dependencies = {
+    "rcarriga/nvim-notify", -- Optional but recommended for enhanced notifications
+  },
   -- Plugin configuration
   opts = {
     -- Default options - can be overridden by user

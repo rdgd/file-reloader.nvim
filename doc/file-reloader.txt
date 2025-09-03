@@ -33,11 +33,22 @@ Features:
 ==============================================================================
 2. INSTALLATION                                   *file-reloader-installation*
 
+Requirements:
+- Neovim 0.7+ (for native libuv support)
+
+Dependencies:
+- Optional but recommended: rcarriga/nvim-notify for enhanced notifications
+  with titles and custom timeouts. Without this plugin, notifications will
+  still work but will use Neovim's basic notification system.
+
 Using lazy.nvim: >
 
     {
       dir = "~/file-reloader.nvim", -- Local path
       name = "file-reloader.nvim",
+      dependencies = {
+        "rcarriga/nvim-notify", -- Optional but recommended
+      },
       lazy = false,
       priority = 900,
       config = function()
@@ -50,6 +61,9 @@ Using packer.nvim: >
 
     use {
       '~/file-reloader.nvim',
+      requires = {
+        'rcarriga/nvim-notify', -- Optional but recommended
+      },
       config = function()
         require('file-reloader').setup()
       end

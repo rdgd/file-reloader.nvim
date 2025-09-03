@@ -7,20 +7,17 @@ M.config = {
   backup = false,
   writebackup = false,
   swapfile = false,
-  
   -- File watching settings
   updatetime = 1000,
   poll_interval = 1000,
   timer_interval = 2000,
   debounce_time = 1000000000, -- 1 second in nanoseconds
-  
   -- Notifications
   notifications = {
     enabled = true,
     timeout = 2000,
     warn_timeout = 4000,
   },
-  
   -- Keymaps
   keymaps = {
     enabled = true,
@@ -61,12 +58,10 @@ local function setup_buffer_watcher(bufnr)
   if filepath == '' or vim.bo[bufnr].buftype ~= '' then
     return
   end
-  
   -- Clean up existing watcher for this buffer
   if file_watchers[bufnr] then
     file_watchers[bufnr]:stop()
   end
-  
   -- Set up new file watcher using native libuv
   file_watchers[bufnr] = vim.loop.new_fs_poll()
   if file_watchers[bufnr] then
@@ -208,10 +203,8 @@ local function setup_autocmds()
     callback = function()
       -- Check all buffers for changes on startup
       vim.cmd.checktime()
-      
       -- Start global timer for backup checking
       global_timer = setup_file_timer()
-      
       -- Set up watchers for all current buffers
       for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
         if vim.api.nvim_buf_is_loaded(bufnr) then

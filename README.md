@@ -19,6 +19,9 @@ A modern, efficient Neovim plugin for automatic file change detection and hot bu
 {
   dir = "~/file-reloader.nvim", -- Local development path
   name = "file-reloader.nvim",
+  dependencies = {
+    "rcarriga/nvim-notify", -- Optional but recommended for enhanced notifications
+  },
   config = function()
     require('file-reloader').setup({
       -- Your configuration here (optional)
@@ -34,6 +37,9 @@ A modern, efficient Neovim plugin for automatic file change detection and hot bu
 ```lua
 use {
   '~/file-reloader.nvim', -- Local development path
+  requires = {
+    'rcarriga/nvim-notify', -- Optional but recommended for enhanced notifications
+  },
   config = function()
     require('file-reloader').setup()
   end
@@ -117,7 +123,10 @@ This combination ensures that file changes are detected quickly and reliably whi
 ## Requirements
 
 - Neovim 0.7+ (for native libuv support)
-- No external dependencies
+
+## Dependencies
+
+- **Optional but recommended**: [rcarriga/nvim-notify](https://github.com/rcarriga/nvim-notify) - Provides enhanced notifications with titles and custom timeouts. Without this plugin, notifications will still work but will use Neovim's basic notification system.
 
 ## License
 
